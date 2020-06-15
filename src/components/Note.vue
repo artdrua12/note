@@ -1,75 +1,76 @@
 <template>
   <div ref="note" class="note">
-    <h1>
-      Title
-      <span class="note_button">&#9998;</span>
-      <span class="note_button">&#10006;</span>
-    </h1>
-    <ul class="app-fullWidth note_list">
-      <item v-for="i in 5" :key="i"></item>
+    <h2>
+      {{obj.title}}
+      <router-link tag="span" class="app_pointer" :to="'/itemNote/'+ order">&#9998;</router-link>
+      <span @click.self="remove" class="app_pointer">&#10006;</span>
+    </h2>
+    <ul @click.prevent class="note_list">
+      <li v-for="(item,i) in obj.list" :key="i">
+        <label>
+          <input v-model="item.check" class="app_pointer app_checkbox" type="checkbox" />
+          {{item.text}}
+        </label>
+      </li>
     </ul>
   </div>
 </template>
 
 <script>
-import Item from "../components/Item";
 export default {
-  props:{
-    angle:{
-      default: 0
+  props: {
+    obj: {
+      type: Object
     },
-    title:{
-      default: 'default Title'
-    }
+    order: {}
   },
   data() {
-    return {
-      full: false
-    };
+    return {};
   },
   methods: {
-    randomAngle() {
-      return Math.floor(Math.random() * (9 + 9)) - 9;
-    },
+    remove() {
+      
+      this.$store.commit("remove", this.order);
+    }
   },
   mounted() {
-   this.$refs.note.style.setProperty("--angleRotate", this.angle + "deg")
-  },
-  components: {
-    Item
+    this.$refs.note.style.setProperty("--angleRotate", this.obj.angle + "deg");
+    this.$refs.note.style.setProperty("--color", this.obj.color);
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .note {
-  --dynamicHeight: 170px;
   --angleRotate: 0;
+  --color: chartreuse;
   transform: rotate(var(--angleRotate));
   display: flex;
   flex-direction: column;
 
-  height: var(--dynamicHeight);
-  border-radius: 5px;
-  background-color: chartreuse;
-  border: 3px solid;
+  height: 170px;
+  padding: 2px 10px;
+  background-color: var(--color);
 
+  border-radius: 5px;
+  border: 1px solid;
+  box-shadow: 10px -7px 10px 5px rgba(0, 0, 0, 0.2);
   overflow: hidden;
 }
-/* .note:hover {
-  z-index: 100;
-  transition: height 0.5s;
-  --dynamicHeight: 100%;
-} */
-.note_button {
-  cursor: pointer;
-  background-color: chartreuse;
-}
+
 .note_list {
   font-size: 1.2rem;
 }
-h1 {
-  background-color: chartreuse;
+.app_pointer:first-child {
+  margin: 0 10px 0 auto;
+}
+
+h2 {
+  background-color: whitesmoke;
+  display: flex;
+  padding: 5px;
+}
+label {
+  user-select: none;
 }
 </style>

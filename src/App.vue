@@ -1,45 +1,23 @@
 <template>
   <div id="app">
-    <input type="text" />
-    <button @click="addStiky">новая стику</button>
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <note :angle="i" v-for="i in notes" :key="i" />
-    <button @click="addNote">add</button>
+    <img
+      alt="Vue logo"
+      @click="clearStorage"
+      class="app_logo"
+      title="очистка LocalStorage"
+      src="./assets/logo.png"
+    />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Note from "./components/Note.vue";
-
 export default {
   name: "App",
-  data() {
-    return {
-      notes: null
-    };
-  },
   methods: {
-    addNote() {
-      localStorage.clear();
-    },
-    randomAngle() {
-      return Math.floor(Math.random() * (10 + 10)) - 10;
-    },
-    addStiky() {
-      let newArray = [];
-      for (let i = 0; i < 10; i++) {
-        newArray.push(this.randomAngle());
-      }
-      console.log(newArray);
-
-      localStorage.setItem("notes", JSON.stringify(newArray));
+    clearStorage() {
+      this.$store.commit("clearStorage");
     }
-  },
-  mounted() {
-    this.notes = JSON.parse(localStorage.getItem("notes"));
-  },
-  components: {
-    Note
   }
 };
 </script>
@@ -47,6 +25,8 @@ export default {
 <style>
 body {
   margin: 0px;
+  padding: 0px;
+  background: url("assets/flower.jpg") repeat;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -54,22 +34,35 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  grid-gap: 20px 30px;
-
-  align-content: flex-start;
-  padding: 30px;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  grid-gap: 30px;
+  max-width: 1230px;
   min-height: 100vh;
-  background: url("assets/flower.jpg") repeat;
-}
+  margin: auto;
+  padding: 0px 50px;
 
-.app_fullWidth {
-  grid-column: -1/1;
+  background-color: cornsilk;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3),
+    -23px 0 20px -23px rgba(0, 0, 0, 0.8), 23px 0 20px -23px rgba(0, 0, 0, 0.8),
+    0 0 40px rgba(0, 0, 0, 0.1) inset;
 }
-.app_fullHeight {
-  grid-row: -1/1;
+.app_pointer {
+  cursor: pointer;
+}
+.app_checkbox {
+  transform: scale(1.5);
+}
+.app_fullWidth {
+  grid-column: 1/-1;
 }
 </style>
 
 <style scoped>
+.app_logo {
+  width: 50px;
+  height: 50px;
+  justify-self: center;
+  margin-top: 10px;
+}
 </style>
