@@ -9,7 +9,7 @@ export default new VueRouter({
             component: Notes
         },
         {
-            path: '/itemNote/:order',
+            path: '/itemNote/:id',
             component: ItemNote
         }
     ],

@@ -2,7 +2,7 @@
   <div ref="note" class="note">
     <h2>
       {{obj.title}}
-      <router-link tag="span" class="app_pointer" :to="'/itemNote/'+ order">&#9998;</router-link>
+      <router-link tag="span" class="app_pointer" :to="'/itemNote/'+ obj.id">&#9998;</router-link>
       <span @click.self="remove" class="app_pointer">&#10006;</span>
     </h2>
     <ul @click.prevent class="note_list">
@@ -21,16 +21,14 @@ export default {
   props: {
     obj: {
       type: Object
-    },
-    order: {}
+    }
   },
   data() {
     return {};
   },
   methods: {
     remove() {
-      
-      this.$store.commit("remove", this.order);
+      this.$store.commit("remove", this.obj.id);
     }
   },
   mounted() {

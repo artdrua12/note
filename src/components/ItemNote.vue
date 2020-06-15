@@ -2,12 +2,7 @@
   <div class="newNote" ref="newNote">
     <input class="app_fullWidth" v-model="title" type="text" placeholder="Заголовок" />
     <h2>Цвет заметки:</h2>
-    <input
-      class="newNote_color"
-      v-model="color"
-      type="color"
-      placeholder="Заголовок"
-    />
+    <input class="newNote_color" v-model="color" type="color" placeholder="Заголовок" />
     <h2>Список:</h2>
     <input v-model="textList" type="text" placeholder="значение" />
     <button @click="addToList">Добавить</button>
@@ -30,6 +25,9 @@
 
 <script>
 export default {
+  props: {
+    oldObj: {}
+  },
   data() {
     return {
       color: "#7fff00",
@@ -51,19 +49,23 @@ export default {
     cancel() {
       this.$router.push("/");
     },
-
+    currentData() {
+      let date = new Date();
+      return date.getTime();
+    },
     save() {
       let obj = {
+        id: this.oldObj?.id ?? this.currentData,
         title: this.title,
         color: this.color,
-        list: this.list
+        list: this.list,
+        angle: this.oldObj?.angle ?? Math.floor(Math.random() * (10 + 10)) - 10
       };
       if (this.order == "new") {
         this.$store.commit("create", obj);
       } else {
         this.$store.commit("update", { order: this.order, obj });
       }
-
       this.cancel();
     }
   },
@@ -74,11 +76,9 @@ export default {
   },
   mounted() {
     if (this.order == "new") return;
-    let array = this.$store.state.notesArray;
-    let obj = array[this.order];
-    this.list = obj.list;
-    this.title = obj.title;
-    this.color = obj.color;
+    this.list = this.oldObj.list;
+    this.title = this.oldObj.title;
+    this.color = this.oldObj.color;
   }
 };
 </script>

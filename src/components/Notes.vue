@@ -1,6 +1,6 @@
 <template>
   <div class="notes">
-    <note v-for="(item, i) in dataNotes" :key="i" :obj="item" :order="item.id" />
+    <note v-for="(item, i) in dataNotes" :key="i" :obj="item" />
     <router-link exact to="/itemNote/new" tag="button" class="notes_add">&#10010;</router-link>
   </div>
 </template>

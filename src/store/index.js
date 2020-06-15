@@ -10,26 +10,21 @@ export default new Vuex.Store({
     },
 
     mutations: {
-        clearStorage(state){
+        clearStorage(state) {
             localStorage.clear();
             state.notesArray.splice(0);
         },
         remove(state, payload) {
-            state.notesArray.splice(payload, 1);
+            let index = state.notesArray.findIndex(item => item.id == payload)
+            state.notesArray.splice(index, 1);
         },
         create(state, payload) {
-            let obj = {
-                title: payload.title,
-                list: payload.list,
-                angle: Math.floor(Math.random() * (10 + 10)) - 10,
-                color: payload.color,
-
-            }
-            state.notesArray.push(obj);
+            state.notesArray.push(payload);
             localStorage.setItem("notes", JSON.stringify(state.notesArray));
         },
         update(state, payload) {
-            state.notesArray.splice(payload.order, 1, payload.obj);
+            let index = state.notesArray.findIndex(item => item.id == payload)
+            state.notesArray.splice(index, 1, payload.obj);
 
         }
     }
