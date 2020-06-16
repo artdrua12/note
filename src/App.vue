@@ -18,6 +18,47 @@ export default {
     clearStorage() {
       this.$store.commit("clearStorage");
     }
+  },
+  mounted() {
+    //тестовые данные 3 заметок, если нет там данных
+    if(JSON.parse(localStorage.getItem("notes"))) return
+
+    const testData = [
+      {
+        id: 1,
+        title: "Тестовый заголовок 1",
+        color: "#ff0000",
+        list: [
+          { check: false, text: "какой то текст 1" },
+          { check: true, text: "какой то текст 2" },
+          { check: false, text: "какой то текст 3" }
+        ],
+        angle: 3
+      },
+      {
+        id: 2,
+        title: "Какой-то заголовок 2",
+        color: "#d7e60e",
+        list: [
+          { check: true, text: "один" },
+          { check: true, text: "два" },
+          { check: false, text: "три" }
+        ],
+        angle: -2
+      },
+      {
+        id: 3,
+        title: "Еще один заголовок",
+        color: "#0ed8d8",
+        list: [
+          { check: false, text: "Скажика Дядя" },
+          { check: false, text: "ведь не даром" },
+          { check: true, text: "Москва, спаленная пожаром" }
+        ],
+        angle: 7
+      }
+    ];
+    localStorage.setItem("notes", JSON.stringify(testData));
   }
 };
 </script>
@@ -64,5 +105,6 @@ body {
   height: 50px;
   justify-self: center;
   margin-top: 10px;
+  color: #d7e60e;
 }
 </style>
