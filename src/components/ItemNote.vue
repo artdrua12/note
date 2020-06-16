@@ -18,12 +18,22 @@
         <button @click="remove(i)">&#10006;</button>
       </li>
     </ul>
+    <error-message>
+      <template v-slot:title>Все несохраненные данные будут потеряны</template>
+      <template v-slot:leftButt>
+        <button @click="cancel">Отмена</button>
+      </template>
+      <template v-slot:rightButt>
+        <button @click="yesMessage">Да</button>
+      </template>
+    </error-message>
     <button class="cancel" @click="cancel">Отмена</button>
     <button @click="save">Сохранить</button>
   </div>
 </template>
 
 <script>
+import ErrorMessage from "./ErrorMessage";
 export default {
   data() {
     return {
@@ -44,9 +54,11 @@ export default {
     remove(i) {
       this.list.splice(i, 1);
     },
+    toMainPage() {
+      this.$router.push("/");
+    },
     cancel() {
-      this.$store.commit("showMessange",null);
-      // this.$router.push("/");
+      this.$store.commit("showMessange", null);
     },
     currentData() {
       let date = new Date();
@@ -69,6 +81,10 @@ export default {
         this.$store.commit("update", this.updateObj);
       }
 
+      this.toMainPage();
+    },
+    yesMessage() {
+      this.toMainPage();
       this.cancel();
     }
   },
@@ -81,10 +97,13 @@ export default {
     if (this.updateId == "new") return;
     this.updateObj = this.$store.state.notesArray.find(
       item => item.id == this.updateId
-    );   
+    );
     this.list = this.updateObj.list;
     this.title = this.updateObj.title;
     this.color = this.updateObj.color;
+  },
+  components: {
+    ErrorMessage
   }
 };
 </script>

@@ -1,11 +1,6 @@
 <template>
   <div id="app">
-    <div v-if="show" class="app-messange">
-      <h3 class="app_fullWidth">Вы действительно хотите удалить выбранную заметку, с айди {{id}} ?</h3>
-      <button @click="remove">да</button>
-      <button @click="cancel">Нет</button>
-      <slot></slot>
-    </div>
+
     <img
       alt="Vue logo"
       @click="clearStorage"
