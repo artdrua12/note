@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     remove() {
-      this.$store.commit("showMessange",this.obj.id);
+      this.$emit('remove', this.obj.id);
     }
   },
   mounted() {

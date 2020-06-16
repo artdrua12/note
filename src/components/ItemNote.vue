@@ -58,7 +58,7 @@ export default {
       this.$router.push("/");
     },
     cancel() {
-      this.$store.commit("showMessange", null);
+      this.$store.commit("showMessange");
     },
     currentData() {
       let date = new Date();

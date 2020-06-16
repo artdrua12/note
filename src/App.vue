@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-
     <img
       alt="Vue logo"
       @click="clearStorage"
@@ -18,21 +17,6 @@ export default {
   methods: {
     clearStorage() {
       this.$store.commit("clearStorage");
-    },
-    remove() {
-      this.$store.commit("remove");
-      this.cancel();
-    },
-    cancel() {
-      this.$store.commit("showMessange", null);
-    }
-  },
-  computed: {
-    show() {
-      return this.$store.state.show;
-    },
-    id() {
-      return this.$store.state.removeId;
     }
   }
 };
@@ -75,7 +59,6 @@ body {
 </style>
 
 <style scoped>
-
 .app_logo {
   width: 50px;
   height: 50px;

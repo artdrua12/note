@@ -8,17 +8,14 @@ export default new Vuex.Store({
     state: {
         notesArray: JSON.parse(localStorage.getItem("notes")) ?? [],
         show: false,
-        removeId: null
     },
     mutations: {
         clearStorage(state) {
             localStorage.clear();
             state.notesArray.splice(0);
         },
-        remove(state) {
-            console.log('state.removeId',state.removeId);
-            
-            let index = state.notesArray.findIndex(item => item.id == state.removeId)
+        remove(state, id) {            
+            let index = state.notesArray.findIndex(item => item.id == id)
             state.notesArray.splice(index, 1);
             localStorage.setItem("notes", JSON.stringify(state.notesArray));
         },
@@ -31,8 +28,7 @@ export default new Vuex.Store({
             state.notesArray.splice(index, 1, obj);
             localStorage.setItem("notes", JSON.stringify(state.notesArray));
         },
-        showMessange(state, id) {
-            state.removeId = id;
+        showMessange(state) {
             state.show = !state.show;
         },
     },
