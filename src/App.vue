@@ -1,9 +1,10 @@
 <template>
   <div id="app">
     <div v-if="show" class="app-messange">
-      Вы действительно хотите удалить?{{id}}
+      <h3 class="app_fullWidth">Вы действительно хотите удалить выбранную заметку, с айди {{id}} ?</h3>
       <button @click="remove">да</button>
       <button @click="cancel">Нет</button>
+      <slot></slot>
     </div>
     <img
       alt="Vue logo"
@@ -35,7 +36,7 @@ export default {
     show() {
       return this.$store.state.show;
     },
-    id(){
+    id() {
       return this.$store.state.removeId;
     }
   }
@@ -79,20 +80,7 @@ body {
 </style>
 
 <style scoped>
-.app-messange {
-  width: 300px;
-  height: 200px;
-  border: 2px solid;
-  position: absolute;
-  margin: auto;
-  z-index: 10;
-  background: rgba(223, 55, 55, 0.9);
-  top: 40%;
-  right: 40%;
-  display: flex;
-  flex-wrap: wrap;
-  color: white;
-}
+
 .app_logo {
   width: 50px;
   height: 50px;

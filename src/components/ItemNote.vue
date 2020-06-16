@@ -45,7 +45,8 @@ export default {
       this.list.splice(i, 1);
     },
     cancel() {
-      this.$router.push("/");
+      this.$store.commit("showMessange",null);
+      // this.$router.push("/");
     },
     currentData() {
       let date = new Date();
