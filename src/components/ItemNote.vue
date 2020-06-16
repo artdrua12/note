@@ -25,16 +25,14 @@
 
 <script>
 export default {
-  props: {
-    oldObj: {}
-  },
   data() {
     return {
       color: "#7fff00",
       list: [],
       title: "",
       textList: "",
-      order: this.$route.params["order"] ?? null
+      updateId: this.$route.params["id"],
+      updateObj: {}
     };
   },
   methods: {
@@ -54,31 +52,38 @@ export default {
       return date.getTime();
     },
     save() {
-      let obj = {
-        id: this.oldObj?.id ?? this.currentData,
-        title: this.title,
-        color: this.color,
-        list: this.list,
-        angle: this.oldObj?.angle ?? Math.floor(Math.random() * (10 + 10)) - 10
-      };
-      if (this.order == "new") {
+      if (this.updateId == "new") {
+        let obj = {
+          id: this.currentData(),
+          title: this.title,
+          color: this.color,
+          list: this.list,
+          angle: Math.floor(Math.random() * (10 + 10)) - 10
+        };
         this.$store.commit("create", obj);
       } else {
-        this.$store.commit("update", { order: this.order, obj });
+        this.updateObj.title = this.title;
+        this.updateObj.color = this.color;
+        this.updateObj.list = this.list;
+        this.$store.commit("update", this.updateObj);
       }
+
       this.cancel();
     }
   },
   watch: {
     $route(toRoute) {
-      this.order = toRoute.params["order"];
+      this.updateId = toRoute.params["id"];
     }
   },
   mounted() {
-    if (this.order == "new") return;
-    this.list = this.oldObj.list;
-    this.title = this.oldObj.title;
-    this.color = this.oldObj.color;
+    if (this.updateId == "new") return;
+    this.updateObj = this.$store.state.notesArray.find(
+      item => item.id == this.updateId
+    );   
+    this.list = this.updateObj.list;
+    this.title = this.updateObj.title;
+    this.color = this.updateObj.color;
   }
 };
 </script>

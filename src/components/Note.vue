@@ -20,7 +20,8 @@
 export default {
   props: {
     obj: {
-      type: Object
+      type: Object,
+      required: true
     }
   },
   data() {
@@ -28,7 +29,7 @@ export default {
   },
   methods: {
     remove() {
-      this.$store.commit("remove", this.obj.id);
+      this.$store.commit("showMessange",this.obj.id);
     }
   },
   mounted() {
